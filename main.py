@@ -24,7 +24,7 @@ def get_video_details(path=None):
 
 
 # Converts strings added to /messages/{pushId}/original to uppercase
-def make_upper_case(data, context):
+def analyse_video(data, context):
     path_parts = context.resource.split("/documents/")[1].split("/")
     collection_path = path_parts[0]
     document_path = "/".join(path_parts[1:])
