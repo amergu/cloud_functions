@@ -5,10 +5,8 @@ steps:
   # Run pip install and pytest in the same build step
   # (pip packages won't be preserved in future steps!)
   args: [-c, 'pip install -r requirements.txt']
-  dir: 'function/dir/from/repo/root'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['functions', 'deploy', 'firestore-v1-event-create-auto', '--trigger-event', 'providers/cloud.firestore/eventTypes/document.create', '--runtime', 'python311', '--entry-point', 'analyse_video', '--trigger-resource', 'projects/health-app-uf/databases/(default)/documents/userTasks/{taskId}']
-  dir: 'function/dir/from/repo/root'
 # [END functions_ci_cd_cloud_build]
 options:
   logging: CLOUD_LOGGING_ONLY
