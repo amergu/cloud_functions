@@ -35,6 +35,8 @@ def analyse_video(data, context):
 
     task_doc = client.collection(collection_path).document(document_path)
 
+    print("Function triggered")
+
     try:
         metadata = data["value"]["fields"]["metadata"]["mapValue"]
         if len(metadata.keys()) != 0:
