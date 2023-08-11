@@ -60,7 +60,8 @@ def analyse_video(data, context):
         metadata = {
             "seconds": seconds,
             "frames": frames,
-            "fps": fps
+            "fps": fps,
+            "new-param": "new-value"
         }
         task_doc.update({"metadata": metadata})
         print(f"Document successfully updated with metadata : {metadata}")
