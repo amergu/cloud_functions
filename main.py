@@ -8,7 +8,11 @@ def get_video_details(path=None):
     if path is None:
         return 0, 0
 
-    data = cv2.VideoCapture(path)
+    try:
+        data = cv2.VideoCapture(path)
+    except Exception as e:
+        print(f"Error in initialising cv2 with the video path : {e}")
+        return 0, 0, 0
 
     # count the number of frames
     frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
