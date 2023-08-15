@@ -10,6 +10,7 @@ steps:
       - functions
       - deploy
       - --gen2
+      - --region=nam5
       - --runtime=python311
       - firestore-v2-event-create-auto
       - --entry-point=analyse_video_gen2
