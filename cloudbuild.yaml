@@ -1,13 +1,24 @@
 # [START functions_ci_cd_cloud_build]
 steps:
-- name: 'docker.io/library/python:3.11'
-  entrypoint: /bin/sh
-  # Run pip install and pytest in the same build step
-  # (pip packages won't be preserved in future steps!)
-  args: [-c, 'pip install -r requirements.txt']
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['functions', 'deploy', 'firestore-v1-event-create-auto', '--trigger-event', 'providers/cloud.firestore/eventTypes/document.create', '--runtime', 'python311', '--entry-point', 'analyse_video', '--trigger-resource', 'projects/health-app-uf/databases/(default)/documents/userTasks/{taskId}']
-# [END functions_ci_cd_cloud_build]
+  - name: 'docker.io/library/python:3.11'
+    entrypoint: /bin/sh
+    # Run pip install and pytest in the same build step
+    # (pip packages won't be preserved in future steps!)
+    args: [ -c, 'pip install -r requirements.txt' ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - functions
+      - deploy
+      - --gen2
+      - --runtime=python311
+      - firestore-v2-event-create-auto
+      - --entry-point=analyse_video_gen2
+      - --trigger-event-filters=type=google.cloud.firestore.document.v1.written
+      - --trigger-event-filters=database='(default)'
+      - --trigger-event-filters-path-pattern=document='userTasks/{taskId}'
+        #  args: ['functions', 'deploy', 'firestore-v1-event-create-auto', '--trigger-event', 'providers/cloud.firestore/eventTypes/document.create', '--runtime', 'python311', '--entry-point', 'analyse_video', '--trigger-resource', 'projects/health-app-uf/databases/(default)/documents/userTasks/{taskId}']
+      #  args: ['functions', 'deploy', 'firestore-v2-event-create-auto', '--trigger-event', 'providers/cloud.firestore/eventTypes/document.create', '--runtime', 'python311', '--entry-point', 'analyse_video', '--trigger-resource', 'projects/health-app-uf/databases/(default)/documents/userTasks/{taskId}']
+      # [END functions_ci_cd_cloud_build]
 options:
   logging: CLOUD_LOGGING_ONLY
   
